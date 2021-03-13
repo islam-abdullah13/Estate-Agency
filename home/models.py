@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 # Create your models here.
 
@@ -56,6 +57,17 @@ class Estate(models.Model):
     room =models.IntegerField(default="2")
     bath =models.IntegerField(default="1")
     garag=models.IntegerField(default="0")
+    image =models.ImageField(upload_to='estates/')
+    price = models.IntegerField(default="10000")
+    slug = models.SlugField(blank=True,null=True)
+
+    def save (self,*args, **kwargs):
+        self.slug=slugify(self.tittle)
+        super(Estate,self).save(*args, **kwargs)
+
 
     def __str__(self):
         return self.tittle
+
+class Amenities(models.Model):
+    pass
